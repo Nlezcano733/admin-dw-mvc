@@ -17,12 +17,12 @@ class ProductsController {
   public async save(req: Request, res: Response) {
     const serialize: I_product = req.body;
     const { title, brand, type, category, price, stock } = serialize;
-
+    console.log(serialize);
     if ([title, brand, type, category, price, stock].every(d => d)) {
       serialize.created_at = new Date;
       const data = await productRepo.save(serialize);
+      res.redirect('/');
       res.json(data);
-      // res.redirect('/');
     } else {
       res.redirect('/');
     }

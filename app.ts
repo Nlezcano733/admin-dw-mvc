@@ -39,7 +39,7 @@ app.use(methodOverride());
 
 // Routes
 app.get('/', (req, res) => res.render("index"));
-app.post('/product/add', (req, res) => productController.save(req, res));
+app.post('/products/add', (req, res) => productController.save(req, res));
 app.use('/products', products);
 
 // Statics files
