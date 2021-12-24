@@ -3,12 +3,15 @@ import path from "path";
 import { engine } from "express-handlebars";
 import methodOverride from "method-override";
 require("dotenv").config();
-const games = require("./src/_data/data.json");
+// const games = require("./src/_data/data.json");
 
 // Routes import
+import products from "./src/routes/products";
+import { productController } from "./src/controller/productsController";
 
 // Initializations
 const app: Express = express();
+require('./src/database');
 
 // Settings
 app.set("port", process.env.PORT || 3000);
@@ -35,15 +38,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride());
 
 // Routes
-app.get("/data", (req, res) => {
-  res.render("index", { title: "Prueba", games: games });
-});
-
-app.post("/data/add", (req, res) => {
-  console.log(req.body);
-  res.status(200);
-  res.redirect("/data");
-});
+app.get('/', (req, res) => res.render("index"));
+app.post('/product/add', (req, res) => productController.save(req, res));
+app.use('/products', products);
 
 // Statics files
 

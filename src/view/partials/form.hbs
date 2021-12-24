@@ -1,27 +1,32 @@
-<form action="/data/add" method="post" class="col-12 col-md-4">
+<form action="/product/add" method="post" class="col-12 col-md-4">
 
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Title product</label>
-    <input type="text" class="form-control" name="titlte" />
-  </div>
+	<div class="mb-3">
+		<label for="exampleInputPassword1" class="form-label">Title product</label>
+		<input type="text" class="form-control" name="titlte" />
+	</div>
 
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Model</label>
-    <input type="text" class="form-control" name="model" />
-  </div>
+	<div class="mb-3">
+		<label for="exampleInputPassword1" class="form-label">Model</label>
+		<input type="text" class="form-control" name="model" />
+	</div>
 
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Brand</label>
-    <div class="input-group">
-      <button class="btn btn-outline-secondary" type="button">Button</button>
-      <select class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon" name="brand">
-        <option selected> Choose brand </option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-    </div>
-  </div>
+	<div class="mb-3">
+		<label for="exampleInputPassword1" class="form-label">Brand</label>
+		<div class="input-group">
+			<button class="btn btn-outline-secondary" type="button">Button</button>
+			<select
+				class="form-select"
+				id="inputGroupSelect03"
+				aria-label="Example select with button addon"
+				name="brand"
+			>
+				<option selected> Choose brand </option>
+				<option value="1">One</option>
+				<option value="2">Two</option>
+				<option value="3">Three</option>
+			</select>
+		</div>
+	</div>
 
-  <button class="btn btn-primary" type="submit">submit</button>
+	<button class="btn btn-primary" type="submit">submit</button>
 </form>
