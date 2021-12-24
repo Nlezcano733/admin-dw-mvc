@@ -1,0 +1,26 @@
+[
+  {
+    "title": "FIFA 22",
+    "brand": "EA Sports",
+    "genre": "sports",
+    "type": "games",
+    "price": 2200,
+    "stock": 38
+  },
+  {
+    "title": "Minecraft",
+    "brand": "Mojang",
+    "genre": "adventure",
+    "type": "games",
+    "price": 2000,
+    "stock": 24
+  },
+  {
+    "title": "Plants vs. Zombies",
+    "brand": "EA",
+    "genre": "arcade",
+    "type": "games",
+    "price": 1800,
+    "stock": 20
+  }
+]
