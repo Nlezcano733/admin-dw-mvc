@@ -1,29 +1,42 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { I_product } from "./interfaces/I_product";
 
-export interface I_product extends mongoose.Document {
-  title: string,
-  model: string,
-  brand: string,
-  type: string,
-  category: string,
-  description: string,
-  price: number,
-  stock: number,
-  picture: string;
-  created_at: Date;
+class ProductModel {
+
+  private _productModel: I_product;
+
+  constructor(brandModel: I_product) {
+    this._productModel = brandModel;
+  }
+  get title(): string {
+    return this._productModel.title;
+  }
+  get model(): string {
+    return this._productModel.model;
+  }
+  get brand(): string {
+    return this._productModel.brand;
+  }
+  get type(): string {
+    return this._productModel.type;
+  }
+  get category(): string {
+    return this._productModel.category;
+  }
+  get description(): string {
+    return this._productModel.description;
+  }
+  get price(): number {
+    return this._productModel.price;
+  }
+  get stock(): number {
+    return this._productModel.stock;
+  }
+  get picture(): string {
+    return this._productModel.picture;
+  }
+  get created_at(): Date {
+    return this._productModel.created_at;
+  }
 }
-
-const productModel = new Schema({
-  title: String,
-  model: String,
-  brand: String,
-  type: String,
-  category: String,
-  description: String,
-  price: Number,
-  stock: Number,
-  picture: String,
-  created_at: Date
-});
-
-export default model<I_product>('Product', productModel);
+Object.seal(ProductModel);
+export = ProductModel;
