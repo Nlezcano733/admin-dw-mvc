@@ -2,12 +2,11 @@ import express, { Express } from "express";
 import path from "path";
 import { engine } from "express-handlebars";
 import methodOverride from "method-override";
+import Helpers from './src/lib/helpers';
 require("dotenv").config();
-// const games = require("./src/_data/data.json");
 
 // Routes import
 import products from "./src/routes/products";
-import { productController } from "./src/controller/productsController";
 
 // Initializations
 const app: Express = express();
@@ -22,7 +21,9 @@ const hbs = engine({
   defaultLayout: "main",
   layoutsDir: path.join(app.get("views"), "layout"),
   partialsDir: [path.join(app.get("views"), "partials")],
-  helpers: require("./src/lib/helpers"),
+  helpers: {
+    eachJson: Helpers.eachJson
+  },
 });
 
 // const hbs = create({ extname: ".hbs" });
@@ -39,7 +40,6 @@ app.use(methodOverride());
 
 // Routes
 app.get('/', (req, res) => res.render("index"));
-app.post('/products/add', (req, res) => productController.save(req, res));
 app.use('/products', products);
 
 // Statics files

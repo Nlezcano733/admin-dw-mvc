@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { productController } from '../controller/productsController';
+import productsController from '../controller/productsController';
 
 class ProductsRoutes {
   public router: Router = Router();
@@ -9,7 +9,7 @@ class ProductsRoutes {
   }
 
   config(): void {
-    this.router.get('/', productController.list);
+    this.router.get('/', productsController.list);
   }
 }
 

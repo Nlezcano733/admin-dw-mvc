@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 import DataAccess from '../dataAccess';
 
 var mongoose = DataAccess.mongooseInstance;
@@ -7,7 +7,7 @@ var mongooseConnection = DataAccess.mongooseConnection;
 class ProductSchema {
 
   static get schema() {
-    let schema = new mongoose.Schema({
+    let schema = new Schema({
       title: String,
       model: String,
       brand: String,

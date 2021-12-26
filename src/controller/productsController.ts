@@ -1,34 +1,112 @@
 import { Request, Response } from 'express';
-import { productRepo } from '../repositories/productsRepository';
-import { I_product } from '../model/productModel';
+import { I_product } from '../model/interfaces/I_product';
+import { _business } from '../model/interfaces/_business';
+import { I_baseController } from './interfaces/I_baseController';
+import ProductsBusiness from '../model/business/productBusiness';
 
-class ProductsController {
+class ProductsController implements I_baseController<ProductsBusiness> {
+  private title: string;
+  private errorMsg: string;
 
-  public async list(req: Request, res: Response) {
-    let page = req.query.page || 1;
-    let limit = req.query.limit || 10;
-    page = (<number>page);
-    limit = (<number>limit);
-
-    const products = await productRepo.listPaginated(page, limit);
-    res.json([...products]);
+  constructor() {
+    this.title = "Products";
+    this.errorMsg = "Error in request";
   }
 
-  public async save(req: Request, res: Response) {
-    const serialize: I_product = req.body;
-    const { title, brand, type, category, price, stock } = serialize;
-    console.log(serialize);
-    if ([title, brand, type, category, price, stock].every(d => d)) {
-      serialize.created_at = new Date;
-      const data = await productRepo.save(serialize);
-      res.redirect('/');
-      res.json(data);
-    } else {
-      res.redirect('/');
+  list(req: Request, res: Response): void {
+    try {
+      let productBusiness = new ProductsBusiness;
+      productBusiness.list((err, result) => {
+        res.render('products', {
+          title: "Products",
+          result: result,
+          first: [...result],
+          error: err ? true : false
+        });
+      });
+    } catch (e) {
+      console.log(e);
+      res.render('products', {
+        title: this.title,
+        error: true,
+        errorMsg: this.errorMsg
+      });
     }
-
   }
 
-}
+  listPaginated(req: Request, res: Response): void {
+    // Not implemented yet
+  }
 
-export const productController: ProductsController = new ProductsController();
+  getById(req: Request, res: Response): void {
+    // Not implemented yet
+  }
+
+  getData(req: Request, res: Response): void {
+    // Not implemented yet
+  }
+
+  save(req: Request, res: Response): void {
+    // try {
+    //   let product: I_product = <I_product>req.body;
+
+    //   this.productBusiness.save(product, (err, result) => {
+    //     console.log(result);
+    //     res.render("products/add", {
+    //       title: this.title,
+    //       error: err ? true : false
+    //     });
+    //   });
+    // } catch (e) {
+    //   console.error(e);
+    //   res.render("products/add", {
+    //     title: this.title,
+    //     error: true,
+    //     errorMsg: this.errorMsg
+    //   });
+    // }
+  }
+
+  update(req: Request, res: Response): void {
+    //   try {
+    //     let product: I_product = <I_product>req.body;
+    //     let id: string = req.params.id;
+
+    //     this.productBusiness.update(product, id, (err, result) => {
+    //       res.render('products', {
+    //         title: this.title,
+    //         error: err ? true : false
+    //       });
+    //     });
+    //   } catch (e) {
+    //     console.error(e);
+    //     res.render("products", {
+    //       title: this.title,
+    //       error: true,
+    //       errorMsg: this.errorMsg
+    //     });
+    //   }
+  }
+
+  delete(req: Request, res: Response): void {
+    //   try {
+    //     let id: string = req.params.id;
+
+    //     this.productBusiness.delete(id, (err) => {
+    //       res.render("products", {
+    //         error: err ? true : false
+    //       });
+    //     });
+    //   } catch (e) {
+    //     console.log(e);
+    //     res.render("products", {
+    //       title: this.title,
+    //       error: true,
+    //       errorMsg: this.errorMsg
+    //     });
+    //   }
+  }
+};
+
+const productsController = new ProductsController();
+export default productsController;
