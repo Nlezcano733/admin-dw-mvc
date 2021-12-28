@@ -1,12 +1,15 @@
 import express, { Express } from "express";
 import path from "path";
 import { engine } from "express-handlebars";
+import Handlebars from "handlebars";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 import methodOverride from "method-override";
 import Helpers from './src/lib/helpers';
 require("dotenv").config();
 
 // Routes import
 import products from "./src/routes/products";
+import _productRoutes from "./src/api/routes/_productRoutes";
 
 // Initializations
 const app: Express = express();
@@ -24,6 +27,7 @@ const hbs = engine({
   helpers: {
     eachJson: Helpers.eachJson
   },
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
 });
 
 // const hbs = create({ extname: ".hbs" });
@@ -41,6 +45,7 @@ app.use(methodOverride());
 // Routes
 app.get('/', (req, res) => res.render("index"));
 app.use('/products', products);
+app.use('/api/products', _productRoutes);
 
 // Statics files
 

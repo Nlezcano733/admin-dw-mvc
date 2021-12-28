@@ -12,3 +12,8 @@ export interface I_readController {
   getById: RequestHandler;
   getData: RequestHandler;
 }
+
+export interface I_dataController {
+  title: string,
+  errorMsg: string;
+}

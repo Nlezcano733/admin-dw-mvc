@@ -1,41 +1,41 @@
-import { Model, Document, Callback, CallbackError, CallbackWithoutResult } from 'mongoose';
-import { I_read, I_write } from "../interfaces/crud";
+import { Model } from 'mongoose';
+import { skipPartiallyEmittedExpressions } from 'typescript';
+import { crud } from "../interfaces/crud";
+class baseRepository<T> implements crud<T>{
 
-class baseRepository<T extends Document> implements I_read<T>, I_write<T>{
+  private _model: Model<T>;
 
-  private _model: Model<Document>;
-
-  constructor(schemaModel: Model<Document>) {
+  constructor(schemaModel: Model<T>) {
     this._model = schemaModel;
   }
 
-  public list(callback: (error: CallbackError, result: T[]) => void) {
-    this._model.find({}, callback);
+  public async list() {
+    return await this._model.find({}).lean();
   };
 
-  public listPaginated(page: number, limit: number, callback: (error: CallbackError, result: T[]) => void) {
-    this._model.find({}, callback)
-      .skip((page - 1) * limit).limit(limit);
+  public async listPaginated(page: number, limit: number) {
+    return await this._model.find({}).skip((page - 1) + limit).limit(page * limit).lean();
   }
 
-  public save(data: T, callback: Callback) {
-    this._model.create(data, callback);
+  public async save(data: T) {
+    const newData = new this._model({ ...data });
+    return await newData.save();
   }
 
-  public update(data: T, id: string, callback: Callback) {
-    this._model.replaceOne({ _id: id }, data, undefined, callback);
+  public async update(data: T, id: string) {
+    return await this._model.replaceOne({ _id: id }, data);
   }
 
-  public delete(id: string, callback: CallbackWithoutResult) {
-    this._model.deleteOne({ _id: id }, undefined, callback);
+  public async delete(id: string) {
+    await this._model.deleteOne({ _id: id });
   }
 
-  public getById(id: string, callback: Callback) {
-    this._model.findOne({ _id: id }, null, undefined, callback);
+  public async getById(id: string) {
+    return await this._model.findOne({ _id: id });
   }
 
-  public getData(key: string, value: any, callback: Callback) {
-    this._model.find({ [key]: value }, callback);
+  public async getData(key: string, value: any) {
+    return await this._model.find({});
   }
 
 }

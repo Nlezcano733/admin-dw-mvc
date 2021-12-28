@@ -9,7 +9,8 @@ class ProductsRoutes {
   }
 
   config(): void {
-    this.router.get('/', productsController.list);
+    this.router.get('/', productsController.listPaginated);
+    this.router.post('/add', productsController.save);
   }
 }
 
