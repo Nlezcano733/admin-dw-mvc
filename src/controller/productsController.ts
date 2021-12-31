@@ -6,28 +6,32 @@ import { I_baseController } from './interfaces/I_baseController';
 
 class ProductsController implements I_baseController {
 
-  async list(req: Request, res: Response) {
+  async list(req: Request, res: Response): Promise<void> {
     const data = await productRepository.list();
     res.render("products", {
       title: "Products",
-      data: data
+      products: data
     });
   }
 
-  async listPaginated(req: Request, res: Response) {
+  async listPaginated(req: Request, res: Response): Promise<void> {
     let page = req.query?.page || 1;
-    let limit = req.query?.limit || 10;
-    page = (<number>page);
-    limit = (<number>limit);
+    let limit = req.query?.limit || 5;
+
+    page = <number>page;
+    limit = <number>limit;
 
     const data = await productRepository.listPaginated(page, limit);
+    console.log(data);
     res.render("products", {
       title: "Products",
-      data: data
+      products: data.results,
+      next: "/products?page=" + data.next,
+      previous: "/products?page=" + data.previous
     });
   }
 
-  async getById(req: Request, res: Response) {
+  async getById(req: Request, res: Response): Promise<void> {
     // Not implement
   }
 
@@ -35,7 +39,7 @@ class ProductsController implements I_baseController {
     // Not implemented yet
   }
 
-  async save(req: Request, res: Response) {
+  async save(req: Request, res: Response): Promise<void> {
     const serialize: I_product = req.body;
     const { title, brand, type, category, price, stock } = serialize;
 
@@ -48,11 +52,11 @@ class ProductsController implements I_baseController {
     }
   }
 
-  update(req: Request, res: Response): void {
+  async update(req: Request, res: Response): Promise<void> {
     // Not implemented
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: Request, res: Response): Promise<void> {
     // not implement
   }
 };

@@ -1,6 +1,7 @@
 import { Model } from 'mongoose';
-import { skipPartiallyEmittedExpressions } from 'typescript';
 import { crud } from "../interfaces/crud";
+import { I_pagination } from '../interfaces/pagination';
+
 class baseRepository<T> implements crud<T>{
 
   private _model: Model<T>;
@@ -14,7 +15,26 @@ class baseRepository<T> implements crud<T>{
   };
 
   public async listPaginated(page: number, limit: number) {
-    return await this._model.find({}).skip((page - 1) + limit).limit(page * limit).lean();
+
+    const data = await this._model.find({});
+    const startIndex: number = (page - 1) * limit;
+    const endIndex: number = page * limit;
+    let next: number = Number(page) + 1;
+    let previous: number = Number(page) - 1;
+
+    const resultPage = data.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(data.length / limit);
+
+    const results: I_pagination = {
+      next: next,
+      previous: previous,
+      limit: limit,
+      total_data: data.length,
+      total_pages: totalPages,
+      results: resultPage
+    };
+
+    return results;
   }
 
   public async save(data: T) {

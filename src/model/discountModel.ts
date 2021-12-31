@@ -30,4 +30,4 @@ class DiscountModel {
 
 }
 Object.seal(DiscountModel);
-export = DiscountModel;
+// export = DiscountModel;

@@ -1,6 +1,11 @@
 class Helpers {
-  static eachJson(data: string[], tag?: string, className?: string, option?: any) {
-    return data?.map(d => d?.slice(1, d.length - 1));
+
+  static toLowerCase(value: string) {
+    return value.toLowerCase();
+  }
+
+  static prepareImg(img: string) {
+    return img || ""; // insertar ruta de imagen predeterminada
   }
 }
 

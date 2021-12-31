@@ -16,4 +16,4 @@ class CategoryModel {
   }
 }
 Object.seal(CategoryModel);
-export = CategoryModel;
+// export = CategoryModel;

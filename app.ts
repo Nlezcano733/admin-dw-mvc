@@ -16,26 +16,29 @@ const app: Express = express();
 require('./src/database');
 
 // Settings
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 4000);
 app.set("views", "./src/view");
 
+//setting engine
 const hbs = engine({
   extname: ".hbs",
   defaultLayout: "main",
   layoutsDir: path.join(app.get("views"), "layout"),
-  partialsDir: [path.join(app.get("views"), "partials")],
+  partialsDir: [
+    path.join(app.get("views"), "partials"),
+    path.join(app.get("views"), "partials/inputs"),
+    path.join(app.get("views"), "partials/buttons")
+  ],
   helpers: {
-    eachJson: Helpers.eachJson
+    toLowerCase: Helpers.toLowerCase,
+    prepareImg: Helpers.prepareImg
   },
   handlebars: allowInsecurePrototypeAccess(Handlebars)
 });
 
-// const hbs = create({ extname: ".hbs" });
-
-// app.engine(".hbs", hbs.call);
 app.engine("hbs", hbs);
 app.set("view engine", "hbs");
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 // Middlewares
 app.use(express.json());

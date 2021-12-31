@@ -22,4 +22,4 @@ class BrandModel {
 
 }
 Object.seal(BrandModel);
-export = BrandModel;
+// export = BrandModel;
