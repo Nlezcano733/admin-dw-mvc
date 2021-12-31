@@ -4,6 +4,9 @@ import DataAccess from '../dataAccess';
 var mongoose = DataAccess.mongooseInstance;
 var mongooseConnection = DataAccess.mongooseConnection;
 
+/**
+ * @deprecated
+ */
 class BrandSchema {
 
   static get schema() {

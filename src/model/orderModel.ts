@@ -24,4 +24,4 @@ class OrderModel {
   }
 }
 Object.seal(OrderModel);
-export = OrderModel;
+// export = OrderModel;

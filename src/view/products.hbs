@@ -1,0 +1,70 @@
+<main class="container grid grid-cols-12 auto-rows-min gap-y-4 mx-auto py-4 px-3 gap-x-4 md:gap-x-8 md:border">
+  <div class="col-span-12 h-12 flex flex-wrap justify-between items-center border-b">
+    <h3 class="text-2xl font-bold text-gray-900">{{title}}</h3>
+    {{> btnMain label="Add Prducts" type="button" color="blue" }}
+  </div>
+
+  <section class="col-span-12 md:col-span-4">
+
+    <form action="api/products/add" method="POST">
+      {{> input type="text" label="Title"}}
+      {{> input type="text" label="Model"}}
+      {{> input type="text" label="Brand"}}
+      {{! para brand se va a usar un input con dropdown}}
+      {{> textarea label="Description"}}
+      {{> inputBtn type="number" label="Price" symbol="$"}}
+      {{> input type="number" label="Stock"}}
+      {{> select label="Type" options=["Component", "Hardware", "Software"] }}
+      {{> input type="text" label="Category"}}
+      {{> input type="text" label="Picture"}}
+      {{! para picture se usara la opcion de input type file}}
+
+      <div class="flex flex-wrap justify-end mt-4">
+        {{> btnOutline label="Reset" type="reset" color="blue" }}
+        {{> btn label="Add product" type="submit" color="blue" }}
+      </div>
+    </form>
+
+  </section>
+
+  <section class="col-span-12 md:col-span-8 h-full">
+    <h2 class="text-xl font-bold text-gray-700">List of products</h2>
+    {{#each products}}
+
+    <div class="w-full grid grid-cols-12 gap-x-5 my-5 shadow-md">
+      <img src={{ prepareImg picture}} alt={{title}} class="col-span-2 aspect-video bg-gray-100" />
+      <div class="col-span-8 py-2 ">
+        <h2 class="font-semibold my-1">{{title}} {{model}}</h2>
+        <p class="text-gray-500 mt-1 mb-2">{{brand}}</p>
+        <div class="flex flex-wrap my-1">
+          <p class="text-sm mr-5">${{price}}</p>
+          <p class="text-sm">Stock: {{stock}}</p>
+        </div>
+      </div>
+      <div class="col-span-2 justify-self-end pr-8 flex flex-col justify-center">
+        <button type="button"
+          class="text-white bg-green-600 transition hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm w-24 py-1 my-1 text-center">
+          Update
+        </button>
+        <button type="button"
+          class="text-white bg-red-700 transition hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm w-24 py-1 my-1 text-center">
+          Delete
+        </button>
+      </div>
+    </div>
+
+    {{/each}}
+
+    </div>
+    <div>
+      <a href={{previous}}
+        class="inline-flex items-center py-2 px-10 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+        Previous
+      </a>
+
+      <a href={{next}}
+        class="inline-flex items-center py-2 px-10 ml-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+        Next
+      </a>
+  </section>
+</main>

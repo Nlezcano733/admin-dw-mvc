@@ -1,6 +1,9 @@
 import Mongoose = require("mongoose");
 require('dotenv').config();
 
+/**
+ * @deprecated
+ */
 class DataAccess {
   static mongooseInstance: any;
   static mongooseConnection: Mongoose.Connection;

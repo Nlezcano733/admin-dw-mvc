@@ -30,4 +30,4 @@ class GameModel {
   }
 }
 Object.seal(GameModel);
-export = GameModel;
+// export = GameModel;

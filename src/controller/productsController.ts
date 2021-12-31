@@ -1,34 +1,65 @@
 import { Request, Response } from 'express';
-import { productRepo } from '../repositories/productsRepository';
-import { I_product } from '../model/productModel';
+import { I_product } from '../model/interfaces/I_product';
+import { _business } from '../model/interfaces/_business';
+import { productRepository } from '../repositories/productRepository';
+import { I_baseController } from './interfaces/I_baseController';
 
-class ProductsController {
+class ProductsController implements I_baseController {
 
-  public async list(req: Request, res: Response) {
-    let page = req.query.page || 1;
-    let limit = req.query.limit || 10;
-    page = (<number>page);
-    limit = (<number>limit);
-
-    const products = await productRepo.listPaginated(page, limit);
-    res.json([...products]);
+  async list(req: Request, res: Response): Promise<void> {
+    const data = await productRepository.list();
+    res.render("products", {
+      title: "Products",
+      products: data
+    });
   }
 
-  public async save(req: Request, res: Response) {
+  async listPaginated(req: Request, res: Response): Promise<void> {
+    let page = req.query?.page || 1;
+    let limit = req.query?.limit || 5;
+
+    page = <number>page;
+    limit = <number>limit;
+
+    const data = await productRepository.listPaginated(page, limit);
+    console.log(data);
+    res.render("products", {
+      title: "Products",
+      products: data.results,
+      next: "/products?page=" + data.next,
+      previous: "/products?page=" + data.previous
+    });
+  }
+
+  async getById(req: Request, res: Response): Promise<void> {
+    // Not implement
+  }
+
+  getData(req: Request, res: Response): void {
+    // Not implemented yet
+  }
+
+  async save(req: Request, res: Response): Promise<void> {
     const serialize: I_product = req.body;
     const { title, brand, type, category, price, stock } = serialize;
-    console.log(serialize);
+
     if ([title, brand, type, category, price, stock].every(d => d)) {
       serialize.created_at = new Date;
-      const data = await productRepo.save(serialize);
+      await productRepository.save(serialize);
       res.redirect('/');
-      res.json(data);
     } else {
       res.redirect('/');
     }
-
   }
 
-}
+  async update(req: Request, res: Response): Promise<void> {
+    // Not implemented
+  }
 
-export const productController: ProductsController = new ProductsController();
+  async delete(req: Request, res: Response): Promise<void> {
+    // not implement
+  }
+};
+
+const productsController = new ProductsController();
+export default productsController;
