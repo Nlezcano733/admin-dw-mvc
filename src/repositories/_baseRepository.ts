@@ -16,14 +16,16 @@ class baseRepository<T> implements crud<T>{
 
   public async listPaginated(page: number, limit: number) {
 
-    const data = await this._model.find({});
+    const data = await this._model.find({}).lean();
+    const values = data?.map((d: any) => ({ ...d, id: d._id.toString() }));
+
     const startIndex: number = (page - 1) * limit;
     const endIndex: number = page * limit;
     let next: number = Number(page) + 1;
     let previous: number = Number(page) - 1;
 
-    const resultPage = data.slice(startIndex, endIndex);
-    const totalPages = Math.ceil(data.length / limit);
+    const resultPage = values.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(values.length / limit);
 
     const results: I_pagination = {
       next: next,
@@ -57,7 +59,6 @@ class baseRepository<T> implements crud<T>{
   public async getData(key: string, value: any) {
     return await this._model.find({});
   }
-
 }
 
 export = baseRepository;

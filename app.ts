@@ -30,8 +30,12 @@ const hbs = engine({
     path.join(app.get("views"), "partials/buttons")
   ],
   helpers: {
+    log: Helpers.log,
+    parseString: Helpers.parseString,
     toLowerCase: Helpers.toLowerCase,
-    prepareImg: Helpers.prepareImg
+    prepareImg: Helpers.prepareImg,
+    posibleUndefined: Helpers.posibleUndefined,
+    modal: Helpers.modal
   },
   handlebars: allowInsecurePrototypeAccess(Handlebars)
 });

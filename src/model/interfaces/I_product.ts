@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 export interface I_product extends mongoose.Document {
   title: string,
-  model: string,
   brand: string,
   type: string,
   category: string,
