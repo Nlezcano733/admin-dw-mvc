@@ -3,7 +3,6 @@ import { I_product } from "./interfaces/I_product";
 
 const productSchema = new Schema({
   title: String,
-  model: String,
   brand: String,
   type: String,
   category: String,
@@ -14,4 +13,4 @@ const productSchema = new Schema({
   created_at: Date
 });
 
-export default model<I_product>("Product", productSchema);
+export default model<I_product>('Product', productSchema);

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { I_product } from '../model/interfaces/I_product';
 import { _business } from '../model/interfaces/_business';
-import { productRepository } from '../repositories/productRepository';
+import productRepository from '../repositories/productRepository';
 import { I_baseController } from './interfaces/I_baseController';
 
 class ProductsController implements I_baseController {
@@ -22,7 +22,6 @@ class ProductsController implements I_baseController {
     limit = <number>limit;
 
     const data = await productRepository.listPaginated(page, limit);
-    console.log(data);
     res.render("products", {
       title: "Products",
       products: data.results,
@@ -32,7 +31,7 @@ class ProductsController implements I_baseController {
   }
 
   async getById(req: Request, res: Response): Promise<void> {
-    // Not implement
+
   }
 
   getData(req: Request, res: Response): void {
@@ -46,9 +45,9 @@ class ProductsController implements I_baseController {
     if ([title, brand, type, category, price, stock].every(d => d)) {
       serialize.created_at = new Date;
       await productRepository.save(serialize);
-      res.redirect('/');
+      res.redirect('/products');
     } else {
-      res.redirect('/');
+      res.redirect('/products');
     }
   }
 
@@ -57,7 +56,10 @@ class ProductsController implements I_baseController {
   }
 
   async delete(req: Request, res: Response): Promise<void> {
-    // not implement
+    const id: string = req.params.id;
+    await productRepository.delete(id);
+
+    res.redirect('/products');
   }
 };
 

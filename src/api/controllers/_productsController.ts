@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { I_baseController } from '../../controller/interfaces/I_baseController';
 import { I_product } from '../../model/interfaces/I_product';
 import { _business } from '../../model/interfaces/_business';
-import { productRepository } from '../../repositories/productRepository';
+import productRepository from '../../repositories/productRepository';
 
 
 class ProductsController implements I_baseController {
@@ -64,9 +64,9 @@ class ProductsController implements I_baseController {
 
     const validate = await productRepository.list();
     try {
-      if (validate.find(v => v._id === id)) {
+      if (validate.find((v: any) => v._id === id)) {
         await productRepository.delete(id);
-        res.json(validate.filter(d => d._id !== id));
+        res.json(validate.filter((d: any) => d._id !== id));
       } else {
         res.status(404).send("Error in request, ID not found");
         return;
