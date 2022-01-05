@@ -9,7 +9,7 @@ class ProductsController implements I_baseController {
   async list(req: Request, res: Response): Promise<void> {
     const data = await productRepository.list();
     res.render("products", {
-      title: "Products",
+      tabTitle: "Products",
       products: data
     });
   }
@@ -23,7 +23,7 @@ class ProductsController implements I_baseController {
 
     const data = await productRepository.listPaginated(page, limit);
     res.render("products", {
-      title: "Products",
+      tabTitle: "Products",
       products: data.results,
       next: "/products?page=" + data.next,
       previous: "/products?page=" + data.previous
@@ -31,7 +31,17 @@ class ProductsController implements I_baseController {
   }
 
   async getById(req: Request, res: Response): Promise<void> {
+    const id: string = req.params.id;
+    const data: I_product | null = await productRepository.getById(id);
 
+    if (data !== null) {
+      res.render("editProduct", {
+        tabTitle: "Product detail",
+        data: data
+      });
+    } else {
+      res.redirect('/products');
+    }
   }
 
   getData(req: Request, res: Response): void {
@@ -52,7 +62,17 @@ class ProductsController implements I_baseController {
   }
 
   async update(req: Request, res: Response): Promise<void> {
-    // Not implemented
+    const id: string = req.params.id;
+    const serialize: I_product = req.body;
+    const { title, brand, type, category, price, stock } = serialize;
+
+    if ([title, brand, type, category, price, stock].every(d => d)) {
+      serialize.created_at = new Date;
+      await productRepository.update(serialize, id);
+      res.redirect('/products');
+    } else {
+      res.redirect('/products');
+    }
   }
 
   async delete(req: Request, res: Response): Promise<void> {

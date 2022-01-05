@@ -10,8 +10,10 @@ class ProductsRoutes {
 
   config(): void {
     this.router.get('/', productsController.listPaginated);
+    this.router.get('/:id', productsController.getById);
     this.router.get('/delete/:id', productsController.delete);
     this.router.post('/add', productsController.save);
+    this.router.post('/edit/:id', productsController.update);
   }
 }
 

@@ -1,6 +1,6 @@
 <main class="container grid grid-cols-12 auto-rows-min gap-y-4 mx-auto py-4 px-3 gap-x-4 md:gap-x-8 md:border">
   <div class="col-span-12 h-12 flex flex-wrap justify-between items-center border-b">
-    <h3 class="text-2xl font-bold text-gray-900">{{title}}</h3>
+    <h3 class="text-2xl font-bold text-gray-900">{{tabTitle}}</h3>
   </div>
 
   <section class="col-span-12 md:col-span-4">
@@ -40,10 +40,10 @@
         </div>
       </div>
       <div class="col-span-2 justify-self-end flex flex-col justify-center">
-        <button type="button"
+        <a type="button" href="products/{{parseString _id}}"
           class="btn-update text-white bg-green-600 transition hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm w-24 py-1 my-1 text-center">
           Update
-        </button>
+        </a>
         <button type="button" data-modal-toggle="modal"
           class="text-white bg-red-700 transition hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm w-24 py-1 my-1 text-center">
           Delete

@@ -11,7 +11,6 @@ class Helpers {
   }
 
   static parseString(value: any) {
-    console.log(value.toString());
     if (value) {
       return value.toString();
     }
