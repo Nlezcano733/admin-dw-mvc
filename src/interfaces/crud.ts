@@ -28,24 +28,3 @@ export interface I_write<T> {
   update(data: T, id: string): Promise<T>;
   delete(id: string): Promise<void>;
 }
-
-
-/**
- * @deprecated
- */
-export interface I_read<T> {
-  list(callback: Callback): void;
-  listPaginated(page: number, limit: number, callback: (error: CallbackError, result: T[]) => void): void;
-  getById(id: string, callback: Callback): void;
-  getData(key: string, value: any, callback: Callback): void;
-}
-
-
-/**
- * @deprecated
- */
-export interface I_write<T> {
-  save(data: T, callback: Callback): void;
-  update(data: T, id: string, callback: Callback): void;
-  delete(id: string, callback: CallbackWithoutResult): void;
-}
