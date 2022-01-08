@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500;700&family=Zen+Dots&=Arimo:wght@500&display=swap");
+
+.wrapper {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 62px auto 60px;
+	min-height: 100vh;
+}
+
+.main-content {
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+.digital-logo {
+	font-family: "Zen dots", sans-serif, helvetica;
+	font-weight: 200;
+}
+
+.digital-green {
+	color: #84cc16;
+}
