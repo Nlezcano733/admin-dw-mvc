@@ -57,7 +57,8 @@ class baseRepository<T> implements crud<T>{
   }
 
   public async getData(key: string, value: any) {
-    return await this._model.find({});
+    const data = await this._model.find({});
+    return data?.filter((d: any) => d.name === value);
   }
 }
 

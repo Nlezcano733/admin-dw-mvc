@@ -16,8 +16,14 @@ class Helpers {
     }
   }
 
+  static slice(value: any, slice: number) {
+    return value.slice(0, slice);
+  }
+
   static toLowerCase(value: string) {
-    return value.toLowerCase();
+    if (value) {
+      return value.toLowerCase();
+    }
   }
 
   static prepareImg(img: string) {
@@ -25,7 +31,7 @@ class Helpers {
   }
 
   static posibleUndefined(value: string | undefined) {
-    return value || "";
+    return value?.trim() || "";
   }
 
   static modal(options: Helper) {

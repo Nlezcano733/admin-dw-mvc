@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import { I_baseController } from './interfaces/I_baseController';
 import { I_product } from '../model/interfaces/I_product';
 import { _business } from '../model/interfaces/_business';
 import productRepository from '../repositories/productRepository';
-import { I_baseController } from './interfaces/I_baseController';
+import Filter from '../lib/filters';
 
 class ProductsController implements I_baseController {
 
@@ -16,28 +17,49 @@ class ProductsController implements I_baseController {
 
   async listPaginated(req: Request, res: Response): Promise<void> {
     let page = req.query?.page || 1;
-    let limit = req.query?.limit || 5;
+    let limit = req.query?.limit || 4;
 
     page = <number>page;
     limit = <number>limit;
 
     const data = await productRepository.listPaginated(page, limit);
+    const totalData = await productRepository.list();
+
+    const brands = Filter.getBrands(totalData);
+    const categories = Filter.getCategories(totalData);
+
+    const nextPage = page < data.total_pages
+      ? `/products?page=${data.next}`
+      : null;
+
+    const prevPage = page > 1
+      ? `/products?page=${data.previous}`
+      : null;
+
     res.render("products", {
       tabTitle: "Products",
       products: data.results,
-      next: "/products?page=" + data.next,
-      previous: "/products?page=" + data.previous
+      brands: brands || [],
+      categories: categories || [],
+      next: nextPage,
+      previous: prevPage,
     });
   }
 
   async getById(req: Request, res: Response): Promise<void> {
     const id: string = req.params.id;
     const data: I_product | null = await productRepository.getById(id);
+    const totalData = await productRepository.list();
+
+    const brands = Filter.getBrands(totalData);
+    const categories = Filter.getCategories(totalData);
 
     if (data !== null) {
       res.render("editProduct", {
         tabTitle: "Product detail",
-        data: data
+        data: data,
+        brands: brands,
+        categories: categories
       });
     } else {
       res.redirect('/products');

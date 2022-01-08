@@ -1,19 +1,46 @@
 <main class="container grid grid-cols-12 auto-rows-min gap-y-4 mx-auto py-4 px-3 gap-x-4 md:gap-x-8 md:border">
   <div class="col-span-12 h-12 flex flex-wrap justify-between items-center border-b">
-    <h3 class="text-2xl font-bold text-gray-900">{{data.title}}</h3>
+    <h3 class="text-2xl font-bold text-gray-900">Product Detail</h3>
   </div>
 
   <section class="col-span-12 md:col-span-4">
     {{#with data}}
     <form id="addProduct" action="edit/{{parseString _id}}" method="post">
       {{> input type="text" label="Title" defaultValue=title}}
-      {{> input type="text" label="Brand" defaultValue=brand }}
-      {{! para brand se va a usar un input con dropdown}}
-      {{> textarea label="Description" }}
+
+      <div class="my-2">
+        <label class="block mb-2 text-md font-medium text-gray-900">
+          Brand
+        </label>
+        <input type="text" name="brand" list="brands" value="{{brand}}"
+          class="block px-2 py-1 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500" />
+
+        <datalist id="brands">
+          {{#each brands}}
+          <option value={{brands}}>{{brands}}</option>
+          {{/each}}
+        </datalist>
+      </div>
+
+      {{> textarea label="Description" defaultValue=description}}
       {{> inputBtn type="number" label="Price" symbol="$" defaultValue=price}}
       {{> input type="number" label="Stock" defaultValue=stock }}
       {{> select label="Type" defaultValue=type defaultValue=type }}
-      {{> input type="text" label="Category" defaultValue=category }}
+
+      <div class="my-2">
+        <label class="block mb-2 text-md font-medium text-gray-900">
+          Category
+        </label>
+        <input type="text" name="category" list="categories" value="{{category}}"
+          class="block px-2 py-1 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500" />
+
+        <datalist id="categories">
+          {{#each categories}}
+          <option value={{categories}}>{{categories}}</option>
+          {{/each}}
+        </datalist>
+      </div>
+
       {{> input type="text" label="Picture" defaultValue=picture}}
       {{! para picture se usara la opcion de input type file}}
 
@@ -28,6 +55,7 @@
 
   <section class="col-span-12 md:col-span-8 h-full">
 
+    {{>productDetail data}}
   </section>
 
 </main>

@@ -34,6 +34,7 @@ const hbs = engine({
     parseString: Helpers.parseString,
     toLowerCase: Helpers.toLowerCase,
     prepareImg: Helpers.prepareImg,
+    slice: Helpers.slice,
     posibleUndefined: Helpers.posibleUndefined,
     modal: Helpers.modal
   },
@@ -51,6 +52,7 @@ app.use(methodOverride());
 
 // Routes
 app.get('/', (req, res) => res.render("index"));
+app.get('/orders', (req, res) => res.render('orders'));
 app.use('/products', products);
 app.use('/api/products', _productRoutes);
 

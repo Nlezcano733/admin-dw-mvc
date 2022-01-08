@@ -1,13 +1,15 @@
+import { Model } from 'mongoose';
 import { I_category } from "../model/interfaces/I_category";
-import { categorySchema } from '../dataAccess/schemas/categorySchema';
+import categoryModel from '../model/categoryModel';
 import baseRepository from "./_baseRepository";
 
 class CategoryRepository extends baseRepository<I_category>{
 
-  constructor() {
-    super(categorySchema);
+  constructor(schemaModel: Model<I_category>) {
+    super(schemaModel);
   }
 
 }
-Object.seal(CategoryRepository);
-export = CategoryRepository;
+
+const categoryRepository = new CategoryRepository(categoryModel);
+export default categoryRepository;
