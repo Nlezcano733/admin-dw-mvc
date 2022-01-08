@@ -2,13 +2,14 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const orderSchema_1 = require("../dataAccess/schemas/orderSchema");
+Object.defineProperty(exports, "__esModule", { value: true });
+const orderModel_1 = __importDefault(require("../model/orderModel"));
 const _baseRepository_1 = __importDefault(require("./_baseRepository"));
 class OrderRepository extends _baseRepository_1.default {
-    constructor() {
-        super(orderSchema_1.orderSchema);
+    constructor(schemaModel) {
+        super(schemaModel);
     }
 }
-Object.seal(OrderRepository);
-module.exports = OrderRepository;
+const orderRepository = new OrderRepository(orderModel_1.default);
+exports.default = orderRepository;
 //# sourceMappingURL=orderRepository.js.map

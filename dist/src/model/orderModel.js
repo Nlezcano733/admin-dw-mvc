@@ -1,25 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class OrderModel {
-    constructor(orderModel) {
-        this._orderModel = orderModel;
-    }
-    get products() {
-        return this._orderModel.products;
-    }
-    get subtotal() {
-        return this._orderModel.subtotal;
-    }
-    get discounts() {
-        return this._orderModel.discounts;
-    }
-    get total() {
-        return this._orderModel.total;
-    }
-    get date() {
-        return this._orderModel.date;
-    }
-}
-Object.seal(OrderModel);
-// export = OrderModel;
+const mongoose_1 = require("mongoose");
+const orderSchema = new mongoose_1.Schema({
+    products: Array,
+    subtotal: Number,
+    discounts: Number,
+    total: Number,
+    date_purchase: Date
+});
+exports.default = (0, mongoose_1.model)('Order', orderSchema);
 //# sourceMappingURL=orderModel.js.map
