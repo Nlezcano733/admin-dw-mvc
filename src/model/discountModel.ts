@@ -1,33 +1,12 @@
+import { model, Schema } from "mongoose";
 import { I_discount } from "./interfaces/I_discount";
 
-class DiscountModel {
+const discountSchema = new Schema({
+  product: Array,
+  percentage: Number,
+  total_discount: Number,
+  date_end: Date,
+  is_active: Boolean,
+});
 
-  private _discountModel: I_discount;
-
-  constructor(discountModel: I_discount) {
-    this._discountModel = discountModel;
-  }
-  get product(): string {
-    return this._discountModel.product;
-  }
-
-  get percentage(): number {
-    return this._discountModel.percentage;
-  }
-
-  get total_discount(): number {
-    return this._discountModel.total_discount;
-  }
-
-  get date_end(): Date {
-    return this._discountModel.date_end;
-  }
-
-  get is_active(): boolean {
-    return this._discountModel.is_active;
-  }
-
-
-}
-Object.seal(DiscountModel);
-// export = DiscountModel;
+export default model<I_discount>('Discount', discountSchema);

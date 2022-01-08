@@ -1,13 +1,15 @@
+import { Model } from 'mongoose';
 import { I_discount } from "../model/interfaces/I_discount";
-import { discountSchema } from '../dataAccess/schemas/discountSchema';
+import discountModel from '../model/discountModel';
 import baseRepository from "./_baseRepository";
 
 class DiscountRepository extends baseRepository<I_discount>{
 
-  constructor() {
-    super(discountSchema);
+  constructor(schemaModel: Model<I_discount>) {
+    super(schemaModel);
   }
 
 }
-Object.seal(DiscountRepository);
-export = DiscountRepository;
+
+const discountRepository = new DiscountRepository(discountModel);
+export default discountRepository;

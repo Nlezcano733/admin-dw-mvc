@@ -1,27 +1,12 @@
-import { I_order } from "./interfaces/I_order";
+import { model, Schema } from "mongoose";
+import { I_order } from './interfaces/I_order';
 
-class OrderModel {
+const orderSchema = new Schema({
+  products: Array,
+  subtotal: Number,
+  discounts: Number,
+  total: Number,
+  date_purchase: Date
+});
 
-  private _orderModel: I_order;
-
-  constructor(orderModel: I_order) {
-    this._orderModel = orderModel;
-  }
-  get products(): string[] {
-    return this._orderModel.products;
-  }
-  get subtotal(): number {
-    return this._orderModel.subtotal;
-  }
-  get discounts(): number {
-    return this._orderModel.discounts;
-  }
-  get total(): number {
-    return this._orderModel.total;
-  }
-  get date(): Date {
-    return this._orderModel.date;
-  }
-}
-Object.seal(OrderModel);
-// export = OrderModel;
+export default model<I_order>('Order', orderSchema);
